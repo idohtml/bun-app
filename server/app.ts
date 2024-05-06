@@ -13,4 +13,4 @@ app.get("*", serveStatic({ root: "./frontend/dist" }));
 app.get("*", serveStatic({ path: "./frontend/dist/index.html" }));
 
 export default app;
-export type APIroutes = typeof apiRoutes;
+export type ApiRoutes = typeof apiRoutes;
