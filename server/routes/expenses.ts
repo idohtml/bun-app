@@ -25,12 +25,14 @@ export const expensesRoute = new Hono()
   .get("/", (c) => {
     return c.json({ expenses: fakeExpenses });
   })
+
   .post("/", zValidator("json", createPostSchema), async (c) => {
     const expense = await c.req.valid("json");
     fakeExpenses.push({ ...expense, id: fakeExpenses.length + 1 });
     c.status(201);
     return c.json({});
   })
+
   .get("/total-spent", (c) => {
     const total = fakeExpenses.reduce(
       (acc, expense) => acc + expense.amount,
@@ -38,6 +40,7 @@ export const expensesRoute = new Hono()
     );
     return c.json({ total });
   })
+
   .get("/:id{[0-9]+}", (c) => {
     const id = Number.parseInt(c.req.param("id"));
     const expense = fakeExpenses.find((expense) => expense.id === id);
@@ -47,6 +50,7 @@ export const expensesRoute = new Hono()
 
     return c.json({ expense });
   })
+
   .delete("/:id{[0-9]+}", (c) => {
     const id = Number.parseInt(c.req.param("id"));
     const index = fakeExpenses.findIndex((expense) => expense.id === id);
